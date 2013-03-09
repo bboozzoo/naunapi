@@ -21,8 +21,7 @@ import os
 
 class NauNapiExtension(GObject.GObject, Nautilus.MenuProvider):
     def __init__(self):
-        logging.basicConfig(filename='/tmp/test-log',
-                            level=logging.DEBUG)
+        logging.basicConfig(level=logging.INFO)
 
         self._log = logging.getLogger('naunapi')
         self._log.debug('starting up')
@@ -36,7 +35,7 @@ class NauNapiExtension(GObject.GObject, Nautilus.MenuProvider):
         Arguments:
         - `stdout`: stdout of pynapi
         """
-        self._log.debug('pynapi finished, status: %d', status)
+        self._log.info('pynapi finished, status: %d', status)
 
         if status == 0:
             with os.fdopen(stdout) as infile:
@@ -68,7 +67,7 @@ class NauNapiExtension(GObject.GObject, Nautilus.MenuProvider):
         GLib.child_watch_add(pid, self._pynapi_finished, stdout,
                              GLib.PRIORITY_DEFAULT)
 
-        self._log.debug('pynapi started as PID %d', pid)
+        self._log.info('pynapi started as PID %d', pid)
 
     def get_file_items(self, window, files):
         self._log.debug('files')
