@@ -8,6 +8,7 @@ URL:
 Source0:        naunapi.py
 
 Requires:       nautilus-python
+Requires:       gtk2-devel
 
 %define _extension_dir %{_datadir}/nautilus-python/extensions
 %description
