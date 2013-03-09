@@ -2,11 +2,11 @@ Name:           naunapi
 Version:        0.1
 Release:        1%{?dist}
 Summary:        Integration of pynapi with Nautilus
-
 License:        GPLv3
-URL:            
+URL:            https://github.com/bboozzoo/naunapi
 Source0:        naunapi.py
-
+Group:          Applications/Multimedia
+BuildArch:	noarch
 Requires:       nautilus-python
 Requires:       gtk2-devel
 
@@ -25,7 +25,7 @@ install -t %{buildroot}/%{_extension_dir} %{SOURCE0}
 rm -rf %{buildroot}
 
 %files
-%doc
+%{_extension_dir}/naunapi.*
 
 
 %changelog
