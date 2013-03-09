@@ -1,7 +1,7 @@
-from gi.repository import Nautilus, GObject, GLib
+from gi.repository import Nautilus, GObject, GLib, Notify
 import logging
 import os
-# import pynotify
+
 
 class NauNapiExtension(GObject.GObject, Nautilus.MenuProvider):
     def __init__(self):
@@ -12,11 +12,11 @@ class NauNapiExtension(GObject.GObject, Nautilus.MenuProvider):
         self._log.debug('starting up')
         self._notifications = True
         self._pynapi = 'pynapi'
-        # pynotify.init('NauNapi')
+        Notify.init('NauNapi')
 
     def _pynapi_finished(self, pid, status, stdout):
         """
-        
+
         Arguments:
         - `stdout`: stdout of pynapi
         """
@@ -25,8 +25,20 @@ class NauNapiExtension(GObject.GObject, Nautilus.MenuProvider):
         if status == 0:
             with os.fdopen(stdout) as infile:
                 path = infile.read()
+                message = 'Subtitles downloaded to %s' % (path)
+                n = Notify.Notification.new('Info',
+                                            message,
+                                            'dialog-information')
+
                 self._log.debug('subtitle path: %s', path)
-        
+        else:
+                n = Notify.Notification.new('Error',
+                                            'Subtitles not found',
+                                            'dialog-information')
+
+        n.show()
+
+
     def _activate_cb(self, menu, path):
         """
         """
